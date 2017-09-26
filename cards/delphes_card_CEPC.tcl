@@ -105,9 +105,9 @@ module Efficiency ElectronTrackingEfficiency {
   # set EfficiencyFormula {efficiency formula as a function of eta and pt}
 
   # tracking efficiency formula for electrons
-  set EfficiencyFormula {                                                    (pt <= 0.1)   * (0.00) +
-                                           (abs(eta) <= 3.0)               * (pt > 0.1)    * (1.00) +
-                                           (abs(eta) >  3.0)                               * (0.00)}
+  set EfficiencyFormula {(energy <= 10.0)   * (0.00) +
+       (abs(eta) <= 3.0) * (energy > 10.0) * (0.995) +
+                           (abs(eta) >  3.0) * (0.00)}
 }
 
 ##########################
@@ -121,8 +121,8 @@ module Efficiency MuonTrackingEfficiency {
   # set EfficiencyFormula {efficiency formula as a function of eta and pt}
 
   # tracking efficiency formula for muons
-  set EfficiencyFormula {                                                    (pt <= 0.1)   * (0.00) +
-                                           (abs(eta) <= 3.0)               * (pt > 0.1)    * (1.00) +
+  set EfficiencyFormula {                                                    (energy <= 10.0)   * (0.00) +
+                                           (abs(eta) <= 3.0)               * (energy > 10.0)    * (0.985) +
                                            (abs(eta) >  3.0)                               * (0.00)}
 }
 
@@ -167,12 +167,14 @@ module MomentumSmearing MuonMomentumSmearing {
   set OutputArray muons
 
   # set ResolutionFormula {resolution formula as a function of eta and pt}
-
-   # resolution formula for charged hadrons
-  set ResolutionFormula {    (abs(eta) <= 1.0)                   * sqrt(0.001^2 + pt^2*1.e-5^2) +
-                             (abs(eta) > 1.0 && abs(eta) <= 3.0) * sqrt(0.01^2 + pt^2*1.e-4^2)}
-
+  # resolution formula for muons
+  
+  set ResolutionFormula { energy*((energy < 5)*0.000267917+(energy >= 100)*0.0000361945+(energy >= 5 && energy < 10)*((0.000211212*(energy-5)+0.000107858*(10-energy))/5)+(energy >= 10 && energy < 20)*((0.000107858*(energy-10)+0.0000601923*(20-energy))/10)+(energy >= 20 && energy < 40)*((0.0000601923*(energy-20)+0.0000369668*(40-energy))/20)+(energy >= 40 && energy < 60)*((0.0000369668*(energy-40)+0.000028476*(60-energy))/20)+(energy >= 60 && energy < 80)*((0.000028476*(energy-60)+0.0000244015*(80-energy))/20)+(energy >= 80 && energy < 100)*((0.0000244015*(energy-80)+0.0000224783*(100-energy))/20))/(1+(abs((1-exp(-2*eta))/(1+exp(-2*eta))) > 0.86)*((1.0/(abs((1-exp(-2*eta))/(1+exp(-2*eta)))*abs((1-exp(-2*eta))/(1+exp(-2*eta))))-1)*2.96-1)) }
+  
+  
 }
+ #set ResolutionFormula {(abs(eta) <= 3.0)*pt*sqrt((2*
+ #     1.e-5)^2+(1.e-3)^2/(pt^2*((2^2)/(exp(eta)+exp(-eta))^2)))}
 
 ##############
 # Track merger
