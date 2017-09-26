@@ -338,6 +338,8 @@ void FastJetFinder::Process()
     ++number;
   }
 
+  if(  fExclusive != "exclusive" || number > fNumberOfJet ) { 
+
   // construct jets
   if(fAreaDefinition)
   {
@@ -536,6 +538,7 @@ void FastJetFinder::Process()
     }
 
     fOutputArray->Add(candidate);
+  }
   }
   //cout<<"Total =  "<<subjj<<endl;
   delete sequence;
