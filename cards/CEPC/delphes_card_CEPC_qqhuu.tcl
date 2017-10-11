@@ -1,7 +1,7 @@
 #######################################
 # Order of execution of various modules
 #######################################
-set MaxEvents 4000
+set MaxEvents 1000
 #SET RandomSeed 123
 
 set ExecutionPath {
@@ -41,6 +41,8 @@ set ExecutionPath {
   FastJetFinder
 
   JetEnergyScale
+
+  BTagging     
 
   UniqueObjectFinder
 
@@ -448,7 +450,7 @@ module FastJetFinder GenJetFinder {
   # algorithm: 1 CDFJetClu, 2 MidPoint, 3 SIScone, 4 kt, 5 Cambridge/Aachen, 6 antikt
   set JetAlgorithm 9 
   set ParameterR 1.5
-  set NumberOfJet 4 
+  set NumberOfJet 2 
   set JetPTMin  0.0
 }
 ############
